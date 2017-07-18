@@ -4,6 +4,6 @@ import org.ssm.dufy.entity.User;
 
 public interface IUserService {
 
-	public User getUserById(int id);
+	User getUserById(int id);
 }
 

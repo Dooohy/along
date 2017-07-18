@@ -1,0 +1,1 @@
+2017-06-29 16:21:13.932 DEBUG [main] org.apache.ibatis.logging.LogFactory.setImplementation():128 -Logging initialized using 'class org.apache.ibatis.logging.slf4j.Slf4jImpl' adapter.

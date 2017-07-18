@@ -16,14 +16,15 @@
     from user_t
     where id = #{id,jdbcType=INTEGER}
   </select>
+ <!--
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from user_t
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="org.ssm.dufy.entity.User" >
-    insert into user_t (id, user_name, password, 
+    insert into user_t (id, user_name, password,
       age)
-    values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
       #{age,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="org.ssm.dufy.entity.User" >
@@ -78,5 +79,5 @@
       password = #{password,jdbcType=VARCHAR},
       age = #{age,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
-  </update>
+  </update> -->
 </mapper>

@@ -1,21 +1,21 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.dufy</groupId>
+  <groupId>dooo.ssm</groupId>
   <artifactId>ssm</artifactId>
   <packaging>war</packaging>
   <version>0.0.1-SNAPSHOT</version>
   <name>ssmDemo</name>
   <url>http://maven.apache.org</url>
   <properties>
-	<spring.version>4.0.5.RELEASE</spring.version>
-	<mybatis.version>3.2.1</mybatis.version>
-	<slf4j.version>1.6.6</slf4j.version>
-	<log4j.version>1.2.12</log4j.version>
-	<mysql.version>5.1.35</mysql.version>
-	
-	
-  </properties>
+	<spring.version>4.1.5.RELEASE</spring.version>
+	<mybatis.version>3.2.8</mybatis.version>
+	<slf4j.version>1.7.7</slf4j.version>
+	<log4j.version>1.2.17</log4j.version>
+	<mysql.version>5.1.36</mysql.version>
+	 <!-- 时间戳-->
+	<maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
+</properties>
   <dependencies>
   <!-- 添加Spring依赖 -->
 	<dependency>
@@ -89,7 +89,7 @@
 		<artifactId>mysql-connector-java</artifactId>
 		<version>${mysql.version}</version>
 	</dependency>
-	
+
 	<!-- alibaba data source 相关jar包-->
      <dependency>
          <groupId>com.alibaba</groupId>
@@ -165,11 +165,78 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>3.8.1</version>
+      <version>4.12-beta-2</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
+
+	<!--根据不同环境读取配置-->
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<env>dev</env>
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+		<profile>
+			<id>test</id>
+			<properties>
+				<env>test</env>
+			</properties>
+		</profile>
+		<profile>
+			<id>product</id>
+			<properties>
+				<env>product</env>
+			</properties>
+		</profile>
+	</profiles>
+
   <build>
     <finalName>ssmDemo</finalName>
+	  <!-- 动态生成配置文件 -->
+	  <filters>
+		  <filter>src/main/filters/property-${env}/jdbc.properties</filter>
+	  </filters>
+
+	  <resources>
+		  <resource>
+			  <directory>src/main/resources</directory>
+			  <filtering>true</filtering>
+		  </resource>
+	  </resources>
+
+	  <!-- 单元测试 动态生成配置文件 -->
+	  <testResources>
+		  <testResource>
+			  <directory>src/test/resources</directory>
+			  <filtering>true</filtering>
+		  </testResource>
+	  </testResources>
+
+
+	  <plugins>
+		  <plugin>
+			  <groupId>org.apache.maven.plugins</groupId>
+			  <artifactId>maven-compiler-plugin</artifactId>
+			  <configuration>
+				  <source>1.7</source>
+				  <target>1.7</target><!--jdk 版本-->
+				  <encoding>UTF-8</encoding>
+			  </configuration>
+		  </plugin>
+
+		  <!-- 打包工程源码设置字符编码 -->
+		  <plugin>
+			  <groupId>org.apache.maven.plugins</groupId>
+			  <artifactId>maven-resources-plugin</artifactId>
+			  <configuration>
+				  <encoding>UTF-8</encoding>
+			  </configuration>
+		  </plugin>
+	  </plugins>
   </build>
 </project>
